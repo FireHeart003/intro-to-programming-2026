@@ -5,7 +5,7 @@ public class Calculator
 {
     public int Add(string numbers)
     {
-        string[] nums = numbers.Split(',');
+        string[] nums = numbers.Split(',', '\n');
         if (nums.Length >= 2 )
         {
             int sum = 0;

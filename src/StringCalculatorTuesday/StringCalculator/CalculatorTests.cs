@@ -51,4 +51,16 @@ public class CalculatorTests
 
         Assert.Equal(expected, result);
     }
+
+    [Theory]
+    [InlineData("1\n2", 3)]
+    [InlineData("1\n2,3", 6)]
+    public void MixDelimiters(string value, int expected)
+    {
+        var calculator = new Calculator();
+
+        var result = calculator.Add(value);
+
+        Assert.Equal(expected, result);
+    }
 }
