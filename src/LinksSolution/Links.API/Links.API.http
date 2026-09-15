@@ -1,0 +1,13 @@
+@Links.API_HostAddress = https://localhost:1337
+
+#Add a link to share
+POST {{Links.API_HostAddress}}/links
+Content-Type: application/json
+
+{
+  "title" : "Hypertheory Labs",
+  "url" : "https://class.hypertheory-labs.com"
+}
+
+###
+GET {{Links.API_HostAddress}}/links

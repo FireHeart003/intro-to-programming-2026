@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="AppHost/AppHost.csproj" />
+  <Project Path="ServiceDefaults/ServiceDefaults.csproj" />
+  <Project Path="Shows.Api/Shows.Api.csproj" />
+  <Project Path="Shows.Tests/Shows.Tests.csproj" />
+</Solution>

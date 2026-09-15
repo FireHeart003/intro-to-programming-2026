@@ -1,0 +1,18 @@
+@host = https://localhost:1337
+
+### List all shows
+GET {{host}}/shows
+Accept: application/json
+
+### Add a show
+POST {{host}}/shows
+Content-Type: application/json
+
+{
+  "title": "Twin Peaks: The Return",
+  "genre": "Drama"
+}
+
+### Get one show (paste an id from the list above)
+GET {{host}}/shows/00000000-0000-0000-0000-000000000000
+Accept: application/json
