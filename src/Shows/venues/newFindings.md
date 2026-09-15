@@ -8,3 +8,4 @@ The choice to create an interface could have gone another way. I would need to s
 
 That request that didn't do what you expected — the one about a show that isn't there. You know what it does. Do you think that's a bug, or a choice? What would settle it?
 
+I believe that's a bug because it says the sequence contains no elements. More then likely, its because the results would be an empty list or empty item as the show does not exist, and it does not know how to handle that error. So some sort of implementation fo try catch should be able to settle it.

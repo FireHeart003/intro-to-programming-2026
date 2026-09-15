@@ -62,7 +62,9 @@ GUID. Predict each one first. The second may not do what you expect.
 
 The valid id should give a response of 200 status ok since it exists while a show that does not exist should have a 404 not found status code for bad request.
 
+Actually, what happened was a 500 interneral server error, which was different from my expected 404 not found status.
+
 ```http
-GET {{host}}/shows/000000-a51c-46fb-a514-2bcce9892339
+GET {{host}}/shows/c46dcb1e-a51c-46fb-a514-2bcce9892337
 Accept: application/json
 ```
