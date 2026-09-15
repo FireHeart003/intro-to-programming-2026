@@ -38,4 +38,17 @@ public class CalculatorTests
 
         Assert.Equal(expected, result);
     }
+
+    [Theory]
+    [InlineData("1,2", 3)]
+    [InlineData("1,2,3", 6)]
+    [InlineData("1,2,3,4,5,6,7,8,9", 45)]
+    public void ArbitraryLengthString(string value, int expected)
+    {
+        var calculator = new Calculator();
+
+        var result = calculator.Add(value);
+
+        Assert.Equal(expected, result);
+    }
 }
