@@ -65,6 +65,6 @@ The valid id should give a response of 200 status ok since it exists while a sho
 Actually, what happened was a 500 interneral server error, which was different from my expected 404 not found status.
 
 ```http
-GET {{host}}/shows/c46dcb1e-a51c-46fb-a514-2bcce9892337
+GET {{host}}/shows/ee8947b1-fbd2-46d8-8c38-234bf868d6fd
 Accept: application/json
 ```
