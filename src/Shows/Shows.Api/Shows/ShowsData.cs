@@ -19,7 +19,7 @@ public class ShowsData(IDocumentSession session) : IProvideShowsData
         return await session.Query<ShowEntity>()
             .Where(s => s.Id == id)
             .Select(s => new ShowDetails(s.Id, s.Title, s.Genre, s.Added))
-            .FirstAsync();
+            .FirstOrDefaultAsync();
     }
 
     public async Task<ShowDetails> AddShowAsync(ShowCreateRequest request)

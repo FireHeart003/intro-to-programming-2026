@@ -17,3 +17,6 @@ the strict sense — there is a double in it.
 
 That is a known gap here, not an oversight. Standing up a real stand-in for the watch desk
 (so the test has no doubles in it) is the kind of thing a later lab picks up.
+
+## Async
+The FirstAsync() returns the first hit in the database, but will also throw an exception if the show does not exist. This broke the API when it would return an exception and there was no proper handling of the exception. We were under the preconception that it would return null instead. Therefore, we swapped FirstAsync() with FirstOrDefaultAsync(), which would return null if the show was not found. This helped with testing and instead of a 500 internal server error, we would get a 404 error.

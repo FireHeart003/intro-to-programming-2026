@@ -1,10 +1,12 @@
 using Alba;
 using NSubstitute;
 using Shows.Api.Shows;
+using WireMock.RequestBuilders;
 
 namespace Shows.Tests;
 
-public class AddingShows(ShowsApiFixture fixture) : IClassFixture<ShowsApiFixture>
+public class AddingShows(RealSystemTestFixture fixture)
+    : IClassFixture<RealSystemTestFixture>
 {
     [Fact]
     public async Task AddedShowShowsUpInTheList()
@@ -39,6 +41,10 @@ public class AddingShows(ShowsApiFixture fixture) : IClassFixture<ShowsApiFixtur
             api.StatusCodeShouldBe(201);
         });
 
-        await fixture.Notifier.Received().NotifyNewShowAsync(Arg.Is<ShowSummary>(s => s!.Title == "The Leftovers"));
+        var calls = fixture.WatchDesk.FindLogEntries(
+            Request.Create().WithPath("/notifications").UsingPost());
+
+        Assert.NotEmpty(calls);
+        //await fixture.Notifier.Received().NotifyNewShowAsync(Arg.Is<ShowSummary>(s => s!.Title == "The Leftovers"));
     }
 }
