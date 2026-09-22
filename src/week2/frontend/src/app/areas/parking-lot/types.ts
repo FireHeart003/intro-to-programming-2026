@@ -5,3 +5,7 @@ export type ParkingLotItem = {
   description: string;
   created: string;
 };
+
+export type ParkingLotDetailItem = ParkingLotItem & {
+  notes: { id: string; content: string; added: string }[];
+};

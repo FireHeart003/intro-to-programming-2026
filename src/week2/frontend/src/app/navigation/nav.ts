@@ -70,7 +70,7 @@ export class Nav {
       path: ['banking'],
     },
     {
-      label: 'Parking lot',
+      label: 'Parking Lot',
       path: ['parking-lot'],
     },
   ]);

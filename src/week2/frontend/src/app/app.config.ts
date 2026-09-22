@@ -11,5 +11,6 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideStellar(),
     provideRouter(routes, withExperimentalAutoCleanupInjectors(), withComponentInputBinding()),
+    // withComponentInputBinding says you are OK with Angular reading from the URL to fulfill inputs on a page.
   ],
 };

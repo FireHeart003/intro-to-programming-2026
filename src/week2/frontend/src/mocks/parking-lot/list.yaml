@@ -1,0 +1,38 @@
+endpoint: /api/parking-lot
+method: GET
+shape: collection
+description: Lists the learning topics available in the parking-lot list page.
+
+responseType:
+  name: ParkingLotItem[]
+  path: src/app/areas/parking-lot/types.ts
+
+context:
+  sourceHints:
+    - src/app/areas/parking-lot/pages/list.ts
+    - src/app/areas/parking-lot/types.ts
+  hints:
+    - 'The page renders each item as a row with a details link to the per-item route.'
+    - 'An empty list should render without crashing and should not show stale item cards.'
+
+scenarios:
+  large:
+    description: Shows a long list of about 30 learning topics to exercise scrolling and dense rendering.
+    active: true
+  typical:
+    description: Shows the full list of learning topics and keeps the detail links visible for each item.
+  empty:
+    description: Tests the empty state when there are no items to display.
+    delay: real
+  slow:
+    description: Tests the loading state while the list is still fetching data.
+    delay: '2000'
+  unauthorized:
+    description: Tests the unauthorized state when access is rejected by the API.
+    httpStatus: 401
+  server-error:
+    description: Tests the failure state when the backend cannot load the learning list.
+    httpStatus: 500
+  timeout:
+    description: Tests the loading state when the request never resolves.
+    delay: infinite

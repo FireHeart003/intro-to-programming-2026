@@ -17,7 +17,7 @@ import { AccountStore } from '../account-store';
         />
       </label>
       <button
-        [disabled]="service.wouldOverdraft() && transactionType() === 'Withdraw'"
+        [disabled]="service.wouldOverdraft()"
         (click)="doTransaction(amt.valueAsNumber)"
         class="btn btn-primary"
       >
