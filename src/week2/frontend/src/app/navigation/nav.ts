@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -38,7 +38,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
             }
           </ul>
         </div>
-        <a class="btn btn-ghost text-xl">Intro Class</a>
+        <a class="btn btn-ghost text-xl">{{ companyName() }}</a>
       </div>
       <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
@@ -59,6 +59,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styles: ``,
 })
 export class Nav {
+  companyName = input('Intro to Programming');
   protected readonly links = signal([
     {
       label: 'Home Page',
@@ -67,6 +68,10 @@ export class Nav {
     {
       label: 'Banking',
       path: ['banking'],
+    },
+    {
+      label: 'Parking lot',
+      path: ['parking-lot'],
     },
   ]);
 }

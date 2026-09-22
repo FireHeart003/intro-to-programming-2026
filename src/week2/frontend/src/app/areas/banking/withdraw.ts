@@ -1,30 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { AccountStore } from './account-store';
+import { TxInput } from './shared/tx-input';
 
 @Component({
   selector: 'app-banking-withdraw',
-  imports: [],
-  template: `
-    <div>
-      <label for="amount" class="label"
-        >Amount to Withdraw
-
-        <input
-          type="number"
-          #amt
-          class="input input-primary"
-          (keyup)="service.setTxAmount(amt.valueAsNumber)"
-        />
-      </label>
-      <button
-        [disabled]="service.wouldOverdraft()"
-        (click)="service.withdraw(amt.valueAsNumber)"
-        class="btn btn-primary"
-      >
-        Make Withdrawl
-      </button>
-    </div>
-  `,
+  imports: [TxInput],
+  template: ` <app-banking-transaction transactionType="Withdraw" /> `,
   styles: ``,
 })
 export class Withdraw {
