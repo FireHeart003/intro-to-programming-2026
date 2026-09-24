@@ -74,7 +74,8 @@ public class ItemsController(IDocumentSession session) : ControllerBase
                 Created = p.Created,
                 Description = p.Description,
                 Title = p.Title
-            }).ToListAsync(token);
+            })
+            .ToListAsync(token);
         return Ok(result);
     }
 }

@@ -13,7 +13,10 @@ import { AccountStore } from './account-store';
       <li><a routerLink="withdraw">Withdraw</a></li>
     </ul>
     <div>
-      <p>Your Balance is {{ account.currentBalance() | currency }}</p>
+      <p>
+        Your Balance is
+        <span data-testid="balance">{{ account.currentBalance() | currency }}</span>
+      </p>
     </div>
     <div class="m-4 p-2">
       <router-outlet />

@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { AccountStore } from '../account-store';
 
 @Component({
@@ -7,21 +7,22 @@ import { AccountStore } from '../account-store';
   template: `
     <div>
       <label for="amount" class="label"
-        >Amount to {{ transactionType() }}
+        >Amount:
 
         <input
           (input)="service.setTxAmount(amt.valueAsNumber)"
           type="number"
           #amt
+          data-testid="amount-input"
           class="input input-primary"
         />
       </label>
       <button
         [disabled]="service.wouldOverdraft()"
         (click)="doTransaction(amt.valueAsNumber)"
-        class="btn btn-primary"
+        class="btn btn-secondary"
       >
-        Make {{ transactionType() }}
+        Perform {{ transactionType() }}
       </button>
     </div>
   `,

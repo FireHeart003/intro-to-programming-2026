@@ -1,5 +1,5 @@
 # msw-lens — project context
-generated: 2026-09-22T18:21:42.498Z
+generated: 2026-09-23T16:08:38.014Z
 
 > Drop this file into any LLM conversation for instant context about what
 > is mocked in this project, what scenarios exist, and what is currently active.
@@ -8,7 +8,7 @@ generated: 2026-09-22T18:21:42.498Z
 
 | endpoint | method | active scenario |
 |----------|--------|-----------------|
-| `/api/parking-lot` | GET | `typical` |
+| `/api/parking-lot` | GET | `bypass` |
 
 ## Scenario details
 
@@ -16,7 +16,10 @@ generated: 2026-09-22T18:21:42.498Z
 manifest: `src\mocks\parking-lot\list.yaml`
 > Lists the learning topics available in the parking-lot list page.
 
-- **typical** ✓ **(active)** — Shows the full list of learning topics and keeps the detail links visible for each item.
+**Currently bypassed** — requests pass through to the real API; no scenario is active.
+
+- **large** — Shows a long list of about 30 learning topics to exercise scrolling and dense rendering.
+- **typical** — Shows the full list of learning topics and keeps the detail links visible for each item.
 - **empty** *(delay: real)* — Tests the empty state when there are no items to display.
 - **slow** *(delay: 2000)* — Tests the loading state while the list is still fetching data.
 - **unauthorized** *(401)* — Tests the unauthorized state when access is rejected by the API.

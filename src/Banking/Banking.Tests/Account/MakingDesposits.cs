@@ -16,6 +16,7 @@ public class MakingDesposits
     public void DepositingIncreasesTheBalance(decimal amount)
     {
         // Given
+        // The BankAccount needs something that can provide bonus calculator
         var account = new BankAccount(Substitute.For<IProvideBonusesForBankAccountDeposits>());
         var openingBalance = account.GetBalance();
 

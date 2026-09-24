@@ -10,11 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.JavaScript" Version="13.5.4" />
     <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.5.4" />
     <PackageReference Include="Scalar.Aspire" Version="0.11.24" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Gateway\Gateway.csproj" />
     <ProjectReference Include="..\ParkingLot.Api\ParkingLot.Api.csproj" />
   </ItemGroup>
 

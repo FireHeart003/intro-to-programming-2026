@@ -17,6 +17,18 @@ var api = builder.AddProject<Projects.ParkingLot_Api>("parkinglot-api")
     .WaitFor(parkingLotDatabase)
     .WithReference(parkingLotDatabase);
 
+var frontend = builder.AddViteApp("frontend", "../../../frontend", "start")
+    .WithExternalHttpEndpoints();
+    
+    
+
 scalar.WithApiReference(api);
+
+builder.AddProject<Projects.Gateway>("gateway")
+    .WithReference(api)
+    .WithReference(frontend)
+    .WaitFor(api)
+    .WaitFor(frontend)
+    .WithExternalHttpEndpoints();
 
 builder.Build().Run();

@@ -6,7 +6,10 @@
 
 // maintains the balance. 
 
-
+// Customer -> ICustomer (almost 100% wrong in C#)
+// Inheritance creates a "Kind of" relationship: A GoldAccount is a *kind of* Account, etc.
+// Implementing an interface creates a "can do" relationship. 
+// Name interfaces as if they were a job description.
 
 public class BankAccount(IProvideBonusesForBankAccountDeposits bonusCalculator)
 {
@@ -15,7 +18,7 @@ public class BankAccount(IProvideBonusesForBankAccountDeposits bonusCalculator)
     public virtual void Deposit(TransactionAmount amountToDeposit)
     {
     
-        decimal bonus = bonusCalculator.CalculateBonusFor(_currentBalance, amountToDeposit);
+        decimal bonus = bonusCalculator.CalculateBonusFor(_currentBalance, amountToDeposit); // Slime, BS, Fake, JFHCI
 
         _currentBalance += amountToDeposit + bonus;
     }

@@ -1,3 +1,3 @@
-import listHandler from './parking-lot/list';
+// import listHandler from './parking-lot/list';
 
-export const handlers = [...listHandler];
+export const handlers = [];

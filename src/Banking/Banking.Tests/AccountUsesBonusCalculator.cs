@@ -8,23 +8,26 @@ namespace Banking.Tests;
 
 public class AccountUsesBonusCalculator
 {
-    [Fact]
-    public void BonusIsAddedToTheBalance()
+    [Theory]
+    [InlineData(100)]
+    [InlineData(225.39)]
+    public void BonusIsAddedToTheBalance(decimal amountToDeposit)
     {
         // given
         var stubbedBonusCalculator = Substitute.For<IProvideBonusesForBankAccountDeposits>();
         var account = new BankAccount(stubbedBonusCalculator);
-        stubbedBonusCalculator.CalculateBonusFor(account.GetBalance().Amount, 100).Returns(42.89M);
-
+        var openingBalance = account.GetBalance().Amount;
+        stubbedBonusCalculator.CalculateBonusFor(openingBalance, amountToDeposit).Returns(42.89M);
+        
 
         // when
-        account.Deposit(100.0M);
+        account.Deposit(amountToDeposit); // <--- Account's Deposit method
 
 
         // then
         var newBalance = account.GetBalance().Amount;
 
-        Assert.Equal(5142.89M, newBalance);
+        Assert.Equal(openingBalance + amountToDeposit + 42.89M, newBalance);
 
     }
 }

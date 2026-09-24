@@ -1,0 +1,13 @@
+@Banking.Api_HostAddress = https://localhost:7121
+
+GET {{Banking.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+POST {{Banking.Api_HostAddress}}/account/deposit
+Content-Type: application/json
+
+{
+  "amount": 100
+}

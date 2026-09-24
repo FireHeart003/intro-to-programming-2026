@@ -1,14 +1,15 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Nav } from './navigation/nav';
+
 import { StellarOverlayComponent } from '@hypertheory-labs/stellar-ng-devtools';
+import { Nav } from './navigation/nav';
 
 @Component({
-  imports: [RouterOutlet, Nav, StellarOverlayComponent],
+  imports: [RouterOutlet, StellarOverlayComponent, Nav],
   selector: 'app-root',
   styles: [],
   template: `
-    <app-navbar [companyName]="nameOfCompany()" />
+    <app-navbar companyName="Intro" />
     <main class="container mx-auto">
       <router-outlet />
     </main>

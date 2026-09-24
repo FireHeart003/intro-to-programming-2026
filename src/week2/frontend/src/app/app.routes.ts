@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { Home } from './pages/home';
+import { Counter } from './widgets/counter';
+import { StatusCheck } from './pages/status-check';
 
 export const routes: Routes = [
   {
@@ -14,6 +16,14 @@ export const routes: Routes = [
     path: 'parking-lot',
     loadChildren: () =>
       import('./areas/parking-lot/parking-lot-routes').then((r) => r.parkingLotRoutes),
+  },
+  {
+    path: 'counter',
+    component: Counter,
+  },
+  {
+    path: 'status',
+    component: StatusCheck,
   },
   {
     path: '**',

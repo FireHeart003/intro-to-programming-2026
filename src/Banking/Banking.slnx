@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="Banking.Api/Banking.Api.csproj" Id="357d5772-e638-4e53-b1ef-9b68cdac41e1" />
   <Project Path="Banking.Domain/Banking.Domain.csproj" Id="7d81b2b6-d744-437b-b4b2-ea65e0149ffc" />
   <Project Path="Banking.Tests/Banking.Tests.csproj" />
 </Solution>
