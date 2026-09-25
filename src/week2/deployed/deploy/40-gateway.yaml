@@ -1,0 +1,67 @@
+# The YARP Gateway — the only thing the HTTPRoute points at.
+#   /api/**  -> parkinglot-api (prefix stripped)
+#   /**      -> frontend
+#
+# Aspire service discovery resolves the names in appsettings.json from
+# `services__<name>__<endpoint>__<n>` config. Under the AppHost those are
+# injected for you; here they are set explicitly.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  namespace: intro-sep-2026
+  labels:
+    app: gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      imagePullSecrets:
+        - name: gitea-registry
+      containers:
+        - name: gateway
+          image: git.hypertheory-labs.dev/jeffry/parking-lot-gateway:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: services__parkinglot-api__http__0
+              value: http://parkinglot-api:8080
+            - name: services__frontend__http__0
+              value: http://frontend:80
+          readinessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+  namespace: intro-sep-2026
+spec:
+  selector:
+    app: gateway
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

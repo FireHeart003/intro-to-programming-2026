@@ -1,0 +1,33 @@
+# Throwaway Postgres for the class demo, run by CloudNativePG.
+#
+# One instance, no backup, deliberately — see databases.md: "for a class or a
+# demo, a single instance with no archive configuration is correct."
+#
+# The operator generates the secret `parking-lot-db-app` (username, password,
+# host, dbname, ...). The API reads it; no password appears in this repo.
+# Connect to `parking-lot-db-rw` — the only one of the three services that
+# means anything with a single instance.
+#
+# To reset (the operator does NOT reap volumes):
+#   kubectl delete cluster parking-lot-db -n intro-sep-2026
+#   kubectl delete pvc -n intro-sep-2026 -l cnpg.io/cluster=parking-lot-db
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: parking-lot-db
+  namespace: intro-sep-2026
+spec:
+  instances: 1
+  # `-standard-bookworm`, not `-bookworm` — see databases.md. Same tag gitea-db runs.
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.7-standard-bookworm
+
+  bootstrap:
+    initdb:
+      database: parking_lot
+      owner: parking_lot
+
+  # local-path volumes cannot grow; this is plenty of headroom for a demo.
+  storage:
+    size: 5Gi
+    storageClass: local-path

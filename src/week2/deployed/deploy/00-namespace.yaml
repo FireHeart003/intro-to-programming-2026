@@ -1,0 +1,14 @@
+# Everything for the Sept 2026 intro class demo lives here.
+#
+# Before applying the rest, the namespace needs a pull secret for the gitea
+# registry (same name the other apps use). It is a secret, so it is not in this
+# directory — copy it from a namespace that already has one:
+#
+#   kubectl --context=k3s-local get secret gitea-registry -n notes -o json \
+#     | jq 'del(.metadata.namespace,.metadata.uid,.metadata.resourceVersion,.metadata.creationTimestamp,.metadata.managedFields,.metadata.annotations)' \
+#     | kubectl --context=k3s-local apply -n intro-sep-2026 -f -
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: intro-sep-2026

@@ -9,12 +9,61 @@ namespace ParkingLot.Api.Items;
 public class ItemsController(IDocumentSession session) : ControllerBase
 {
 
+    [HttpDelete("/parking-lot/{id:guid}/notes/{noteId:guid}")]
+    public async Task<ActionResult> DeleteNoteAsync(
+        [FromRoute] Guid id,
+        [FromRoute] Guid noteId,
+        CancellationToken token
+    )
+    {
+        var entity = await session.LoadAsync<ParkingLotEntity>(id, token);
+        if(entity is null)
+        {
+            return NotFound();
+        }
+        var noteToDelete = entity.Notes.FirstOrDefault(n => n.Id == noteId);
+        if(noteToDelete is null)
+        {
+            return NotFound();
+        }
+        entity.Notes = [.. entity.Notes.Where(n => n.Id != noteId)];
+        session.Store(entity);
+        await session.SaveChangesAsync();
+        return NoContent();
+    }
+
+    [HttpPost("/parking-lot/{id:guid}/notes")]
+    public async Task<ActionResult<Note>> AddNoteAsync(
+        [FromRoute] Guid id,
+        [FromBody] NoteCreateItem note,
+        TimeProvider clock,
+        CancellationToken token
+        )
+    {
+        var entity = await session.LoadAsync<ParkingLotEntity>(id, token);
+        if(entity is null)
+        {
+            return NotFound();
+        }
+        var noteToAdd = new Note
+        {
+            Id = Guid.NewGuid(),
+            Content = note.Content,
+            Added = clock.GetUtcNow()
+        };
+        entity.Notes = [.. entity.Notes, noteToAdd];
+        session.Store(entity);
+        await session.SaveChangesAsync(token);
+        return Ok(noteToAdd);
+    }
     [HttpPost("/parking-lot")]
     public async Task<ActionResult<ParkingLotDetailsItem>> AddAsync(
         [FromBody] ParkingLotCreateItem request,
         TimeProvider clock
         )
     {
+        // do not do this. this is a fake delay, etc.
+        await Task.Delay(3000);
         var entityToSave = new ParkingLotEntity
         {
             Id = Guid.NewGuid(),
@@ -106,7 +155,7 @@ public record ParkingLotDetailsItem
 
 public record ParkingLotCreateItem
 {
-    [Required, MinLength(3), MaxLength(100)]
+    [Required, MinLength(5), MaxLength(100)]
     public string Title { get; set; } = string.Empty;
     [MaxLength(500)]
     public string Description { get; set; } = string.Empty;
@@ -120,6 +169,7 @@ public class ParkingLotEntity
     public string Description { get; set; } = string.Empty;
     public DateTimeOffset Created { get; set; }
     public IReadOnlyList<Note> Notes { get; set; }= new List<Note>();
+    //public bool MarkedAsLearned { get; set; } = false;
 
 }
 
@@ -129,3 +179,9 @@ public record Note
     public string Content { get; set; } = string.Empty;
     public DateTimeOffset Added { get; set; }
  }
+
+public record NoteCreateItem
+{
+    [Required, MinLength(1), MaxLength(500)]
+    public string Content { get; set; } = string.Empty;
+}

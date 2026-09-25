@@ -1,0 +1,77 @@
+# ParkingLot.Api — Marten over Postgres.
+#
+# The Service is named `parkinglot-api` to match the Aspire resource name, so
+# the Gateway's YARP config ("https+http://parkinglot-api/") reads the same in
+# the cluster as it does under the AppHost.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parkinglot-api
+  namespace: intro-sep-2026
+  labels:
+    app: parkinglot-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: parkinglot-api
+  template:
+    metadata:
+      labels:
+        app: parkinglot-api
+    spec:
+      imagePullSecrets:
+        - name: gitea-registry
+      containers:
+        - name: api
+          image: git.hypertheory-labs.dev/jeffry/parking-lot-api:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: parking-lot-db-app
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: parking-lot-db-app
+                  key: password
+            # AddNpgsqlDataSource("parking-lot") reads ConnectionStrings:parking-lot.
+            # $(DB_USER)/$(DB_PASSWORD) are expanded by Kubernetes from the vars above.
+            - name: ConnectionStrings__parking-lot
+              value: "Host=parking-lot-db-rw;Port=5432;Database=parking_lot;Username=$(DB_USER);Password=$(DB_PASSWORD)"
+          # /health and /alive are only mapped in Development (ServiceDefaults),
+          # so probe the port instead.
+          readinessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: parkinglot-api
+  namespace: intro-sep-2026
+spec:
+  selector:
+    app: parkinglot-api
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http

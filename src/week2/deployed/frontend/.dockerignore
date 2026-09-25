@@ -1,0 +1,10 @@
+node_modules
+dist
+.angular
+playwright-report
+test-results
+e2e
+.vscode
+.git
+Dockerfile
+.dockerignore

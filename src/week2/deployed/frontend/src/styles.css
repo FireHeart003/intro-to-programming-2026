@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'tailwindcss';
+@plugin "daisyui" {
+  themes:
+    nord --default,
+    dracula --prefersdark;
+}
+
+@layer utilities {
+  pre {
+    @apply text-green-400 bg-black font-mono text-xl border-4 border-orange-200;
+  }
+  input[required] {
+    @apply border-l-4 border-green-400;
+  }
+  label:has(+ input[required]) .label::after {
+    content: '*';
+    @apply text-error;
+  }
+}

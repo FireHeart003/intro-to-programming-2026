@@ -8,7 +8,7 @@ import { StandardBonusCalculator } from './standard-bonus-calculator';
 //   },
 // };
 describe('The Bank Store', () => {
-  it('has an initial balance', () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         AccountStore,
@@ -16,9 +16,24 @@ describe('The Bank Store', () => {
         // {
         //   provide: StandardBonusCalculator,
         //   useValue: dummyBonusCalculator,
-        // },q
+        // },
       ],
     });
+  });
+  it.skip('Opening Balance is Correct', async () => {
+    const store = TestBed.inject(AccountStore);
+    expect(store.currentBalance()).toBe(5000);
+  });
+  it.skip('Can do withdrawals', () => {
+    const store = TestBed.inject(AccountStore);
+    const openingBalance = store.currentBalance();
+
+    store.withdraw(80.23);
+
+    expect(store.currentBalance()).toBe(openingBalance - 80.23);
+  });
+
+  it('has an initial balance', () => {
     const store = TestBed.inject(AccountStore);
     const bc = TestBed.inject(StandardBonusCalculator);
 

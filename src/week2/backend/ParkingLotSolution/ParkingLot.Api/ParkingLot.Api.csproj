@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Aspire.Npgsql" Version="13.5.4" />
+    <PackageReference Include="Marten" Version="9.39.1" />
     <PackageReference Include="Marten.AspNetCore" Version="9.38.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
   </ItemGroup>
